@@ -1,39 +1,65 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Lock, Plus, Search, Eye, EyeOff, Edit, Trash2, Key, FileText, CreditCard, Shield } from "lucide-react"
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Lock,
+  Plus,
+  Search,
+  Eye,
+  EyeOff,
+  Edit,
+  Trash2,
+  Key,
+  FileText,
+  CreditCard,
+  Shield,
+} from "lucide-react";
 
 interface VaultEntry {
-  id: string
-  type: "password" | "note" | "card"
-  title: string
-  username?: string
-  password?: string
-  url?: string
-  note?: string
-  cardNumber?: string
-  expiryDate?: string
-  cvv?: string
-  createdAt: Date
-  updatedAt: Date
+  id: string;
+  type: "password" | "note" | "card";
+  title: string;
+  username?: string;
+  password?: string;
+  url?: string;
+  note?: string;
+  cardNumber?: string;
+  expiryDate?: string;
+  cvv?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export function Vault() {
-  const [isUnlocked, setIsUnlocked] = useState(false)
-  const [masterPassword, setMasterPassword] = useState("")
-  const [entries, setEntries] = useState<VaultEntry[]>([])
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedType, setSelectedType] = useState<string>("all")
-  const [showPasswords, setShowPasswords] = useState<Record<string, boolean>>({})
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
-  const [editingEntry, setEditingEntry] = useState<VaultEntry | null>(null)
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [masterPassword, setMasterPassword] = useState("");
+  const [entries, setEntries] = useState<VaultEntry[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedType, setSelectedType] = useState<string>("all");
+  const [showPasswords, setShowPasswords] = useState<Record<string, boolean>>(
+    {}
+  );
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [editingEntry, setEditingEntry] = useState<VaultEntry | null>(null);
 
   // Demo data
   const demoEntries: VaultEntry[] = [
@@ -75,72 +101,72 @@ export function Vault() {
       createdAt: new Date(Date.now() - 345600000),
       updatedAt: new Date(Date.now() - 345600000),
     },
-  ]
+  ];
 
   useEffect(() => {
     if (isUnlocked) {
       // In a real app, this would decrypt data from IndexedDB
-      setEntries(demoEntries)
+      setEntries(demoEntries);
     }
-  }, [isUnlocked])
+  }, [isUnlocked]);
 
   const unlock = () => {
     // In a real app, this would verify the master password hash
     if (masterPassword === "demo123") {
-      setIsUnlocked(true)
-      setMasterPassword("")
+      setIsUnlocked(true);
+      setMasterPassword("");
     } else {
-      alert("Demo password is: demo123")
+      alert("Demo password is: demo123");
     }
-  }
+  };
 
   const lock = () => {
-    setIsUnlocked(false)
-    setEntries([])
-    setShowPasswords({})
-  }
+    setIsUnlocked(false);
+    setEntries([]);
+    setShowPasswords({});
+  };
 
   const togglePasswordVisibility = (id: string) => {
     setShowPasswords((prev) => ({
       ...prev,
       [id]: !prev[id],
-    }))
-  }
+    }));
+  };
 
   const filteredEntries = entries.filter((entry) => {
     const matchesSearch =
       entry.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       entry.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      entry.url?.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesType = selectedType === "all" || entry.type === selectedType
-    return matchesSearch && matchesType
-  })
+      entry.url?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesType = selectedType === "all" || entry.type === selectedType;
+    return matchesSearch && matchesType;
+  });
 
   const getTypeIcon = (type: string) => {
     switch (type) {
       case "password":
-        return <Key className="h-4 w-4" />
+        return <Key className="h-4 w-4" />;
       case "note":
-        return <FileText className="h-4 w-4" />
+        return <FileText className="h-4 w-4" />;
       case "card":
-        return <CreditCard className="h-4 w-4" />
+        return <CreditCard className="h-4 w-4" />;
       default:
-        return <Shield className="h-4 w-4" />
+        return <Shield className="h-4 w-4" />;
     }
-  }
+  };
 
   const getTypeColor = (type: string) => {
     switch (type) {
       case "password":
-        return "bg-primary/10 text-primary"
+        return "bg-primary/10 text-primary";
       case "note":
-        return "bg-accent/10 text-accent"
+        return "bg-accent/10 text-accent";
       case "card":
-        return "bg-chart-3/10 text-chart-3"
+        return "bg-chart-3/10 text-chart-3";
       default:
-        return "bg-muted text-muted-foreground"
+        return "bg-muted text-muted-foreground";
     }
-  }
+  };
 
   if (!isUnlocked) {
     return (
@@ -151,12 +177,16 @@ export function Vault() {
               <Lock className="h-8 w-8 text-primary" />
             </div>
             <h1 className="text-2xl font-bold mb-2">Secure Vault</h1>
-            <p className="text-muted-foreground">Enter your master password to unlock your encrypted vault</p>
+            <p className="text-muted-foreground">
+              Enter your master password to unlock your encrypted vault
+            </p>
           </div>
 
           <div className="space-y-4">
             <div>
-              <Label htmlFor="master-password">Master Password</Label>
+              <Label htmlFor="master-password" className="mb-4">
+                Master Password
+              </Label>
               <Input
                 id="master-password"
                 type="password"
@@ -166,11 +196,16 @@ export function Vault() {
                 onKeyPress={(e) => e.key === "Enter" && unlock()}
               />
             </div>
-            <Button onClick={unlock} className="w-full" disabled={!masterPassword}>
+            <Button
+              onClick={unlock}
+              className="w-full"
+              disabled={!masterPassword}
+            >
               Unlock Vault
             </Button>
             <p className="text-xs text-muted-foreground text-center">
-              Demo password: <code className="bg-muted px-1 rounded">demo123</code>
+              Demo password:{" "}
+              <code className="bg-muted px-1 rounded">demo123</code>
             </p>
           </div>
 
@@ -188,7 +223,7 @@ export function Vault() {
           </div>
         </Card>
       </div>
-    )
+    );
   }
 
   return (
@@ -198,7 +233,9 @@ export function Vault() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold">Secure Vault</h1>
-            <p className="text-muted-foreground">{entries.length} encrypted entries stored locally</p>
+            <p className="text-muted-foreground">
+              {entries.length} encrypted entries stored locally
+            </p>
           </div>
           <div className="flex items-center space-x-2">
             <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
@@ -239,8 +276,13 @@ export function Vault() {
                     <Input type="password" placeholder="Password" />
                   </div>
                   <div className="flex space-x-2">
-                    <Button onClick={() => setIsAddDialogOpen(false)}>Save Entry</Button>
-                    <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>
+                    <Button onClick={() => setIsAddDialogOpen(false)}>
+                      Save Entry
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => setIsAddDialogOpen(false)}
+                    >
                       Cancel
                     </Button>
                   </div>
@@ -285,10 +327,17 @@ export function Vault() {
         {/* Entries Grid */}
         <div className="grid gap-4">
           {filteredEntries.map((entry) => (
-            <Card key={entry.id} className="p-6 hover:shadow-md transition-shadow">
+            <Card
+              key={entry.id}
+              className="p-6 hover:shadow-md transition-shadow"
+            >
               <div className="flex items-start justify-between">
                 <div className="flex items-start space-x-4 flex-1">
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${getTypeColor(entry.type)}`}>
+                  <div
+                    className={`w-10 h-10 rounded-lg flex items-center justify-center ${getTypeColor(
+                      entry.type
+                    )}`}
+                  >
                     {getTypeIcon(entry.type)}
                   </div>
 
@@ -304,23 +353,43 @@ export function Vault() {
                       <div className="space-y-2 text-sm">
                         {entry.username && (
                           <div className="flex items-center space-x-2">
-                            <span className="text-muted-foreground w-20">Username:</span>
+                            <span className="text-muted-foreground w-20">
+                              Username:
+                            </span>
                             <span className="font-mono">{entry.username}</span>
                           </div>
                         )}
                         {entry.password && (
                           <div className="flex items-center space-x-2">
-                            <span className="text-muted-foreground w-20">Password:</span>
-                            <span className="font-mono">{showPasswords[entry.id] ? entry.password : "••••••••"}</span>
-                            <Button variant="ghost" size="sm" onClick={() => togglePasswordVisibility(entry.id)}>
-                              {showPasswords[entry.id] ? <EyeOff className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
+                            <span className="text-muted-foreground w-20">
+                              Password:
+                            </span>
+                            <span className="font-mono">
+                              {showPasswords[entry.id]
+                                ? entry.password
+                                : "••••••••"}
+                            </span>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => togglePasswordVisibility(entry.id)}
+                            >
+                              {showPasswords[entry.id] ? (
+                                <EyeOff className="h-3 w-3" />
+                              ) : (
+                                <Eye className="h-3 w-3" />
+                              )}
                             </Button>
                           </div>
                         )}
                         {entry.url && (
                           <div className="flex items-center space-x-2">
-                            <span className="text-muted-foreground w-20">URL:</span>
-                            <span className="font-mono text-primary truncate">{entry.url}</span>
+                            <span className="text-muted-foreground w-20">
+                              URL:
+                            </span>
+                            <span className="font-mono text-primary truncate">
+                              {entry.url}
+                            </span>
                           </div>
                         )}
                       </div>
@@ -329,7 +398,9 @@ export function Vault() {
                     {entry.type === "note" && entry.note && (
                       <div className="text-sm">
                         <span className="text-muted-foreground">Note:</span>
-                        <p className="mt-1 whitespace-pre-wrap text-sm bg-muted/50 p-2 rounded">{entry.note}</p>
+                        <p className="mt-1 whitespace-pre-wrap text-sm bg-muted/50 p-2 rounded">
+                          {entry.note}
+                        </p>
                       </div>
                     )}
 
@@ -337,27 +408,44 @@ export function Vault() {
                       <div className="space-y-2 text-sm">
                         {entry.cardNumber && (
                           <div className="flex items-center space-x-2">
-                            <span className="text-muted-foreground w-20">Number:</span>
+                            <span className="text-muted-foreground w-20">
+                              Number:
+                            </span>
                             <span className="font-mono">
                               {showPasswords[entry.id]
                                 ? entry.cardNumber
-                                : "•••• •••• •••• " + entry.cardNumber.slice(-4)}
+                                : "•••• •••• •••• " +
+                                  entry.cardNumber.slice(-4)}
                             </span>
-                            <Button variant="ghost" size="sm" onClick={() => togglePasswordVisibility(entry.id)}>
-                              {showPasswords[entry.id] ? <EyeOff className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => togglePasswordVisibility(entry.id)}
+                            >
+                              {showPasswords[entry.id] ? (
+                                <EyeOff className="h-3 w-3" />
+                              ) : (
+                                <Eye className="h-3 w-3" />
+                              )}
                             </Button>
                           </div>
                         )}
                         {entry.expiryDate && (
                           <div className="flex items-center space-x-2">
-                            <span className="text-muted-foreground w-20">Expires:</span>
-                            <span className="font-mono">{entry.expiryDate}</span>
+                            <span className="text-muted-foreground w-20">
+                              Expires:
+                            </span>
+                            <span className="font-mono">
+                              {entry.expiryDate}
+                            </span>
                           </div>
                         )}
                       </div>
                     )}
 
-                    <p className="text-xs text-muted-foreground mt-3">Updated {entry.updatedAt.toLocaleDateString()}</p>
+                    <p className="text-xs text-muted-foreground mt-3">
+                      Updated {entry.updatedAt.toLocaleDateString()}
+                    </p>
                   </div>
                 </div>
 
@@ -381,7 +469,9 @@ export function Vault() {
             </div>
             <h3 className="text-lg font-semibold mb-2">No entries found</h3>
             <p className="text-muted-foreground mb-4">
-              {searchTerm ? "Try adjusting your search terms" : "Add your first entry to get started"}
+              {searchTerm
+                ? "Try adjusting your search terms"
+                : "Add your first entry to get started"}
             </p>
             <Button onClick={() => setIsAddDialogOpen(true)}>
               <Plus className="h-4 w-4 mr-2" />
@@ -391,5 +481,5 @@ export function Vault() {
         )}
       </div>
     </div>
-  )
+  );
 }

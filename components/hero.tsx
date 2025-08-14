@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { MessageCircle, Search, Lock, ArrowRight, Zap } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { MessageCircle, Search, Lock, ArrowRight, Zap } from "lucide-react";
 
 export function Hero() {
   return (
@@ -18,14 +18,15 @@ export function Hero() {
             </div>
 
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
-              <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+              <span className="text-white bg-clip-text text-transparent">
                 SecureLink Vault
               </span>
             </h1>
 
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
-              The ultimate security suite for students and Gen Z. Encrypted messaging, phishing protection, and secure
-              data storage - all in one modern, privacy-first platform.
+              The ultimate security suite for students and Gen Z. Encrypted
+              messaging, phishing protection, and secure data storage - all in
+              one modern, privacy-first platform.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -33,7 +34,11 @@ export function Hero() {
                 Get Started
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button variant="outline" size="lg" className="text-lg px-8 py-6 bg-transparent">
+              <Button
+                variant="outline"
+                size="lg"
+                className="text-lg px-8 py-6 bg-transparent"
+              >
                 Learn More
               </Button>
             </div>
@@ -45,9 +50,12 @@ export function Hero() {
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Three Powerful Tools, One Secure Platform</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+              Three Powerful Tools, One Secure Platform
+            </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Everything you need to stay secure online, designed with privacy and usability in mind.
+              Everything you need to stay secure online, designed with privacy
+              and usability in mind.
             </p>
           </div>
 
@@ -58,8 +66,9 @@ export function Hero() {
               </div>
               <h3 className="text-2xl font-bold mb-4">Encrypted Messaging</h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                End-to-end encrypted peer-to-peer messaging with no server storage. Your conversations stay completely
-                private with AES-256 encryption.
+                End-to-end encrypted peer-to-peer messaging with no server
+                storage. Your conversations stay completely private with AES-256
+                encryption.
               </p>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-center space-x-2">
@@ -83,8 +92,9 @@ export function Hero() {
               </div>
               <h3 className="text-2xl font-bold mb-4">Phishing Detection</h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Advanced AI-powered phishing detection to keep you safe from malicious links. Get instant safety reports
-                with detailed explanations.
+                Advanced AI-powered phishing detection to keep you safe from
+                malicious links. Get instant safety reports with detailed
+                explanations.
               </p>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-center space-x-2">
@@ -108,8 +118,8 @@ export function Hero() {
               </div>
               <h3 className="text-2xl font-bold mb-4">Secure Vault</h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Store passwords, notes, and sensitive data locally with AES-256 encryption. Your data never leaves your
-                device.
+                Store passwords, notes, and sensitive data locally with AES-256
+                encryption. Your data never leaves your device.
               </p>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-center space-x-2">
@@ -150,5 +160,5 @@ export function Hero() {
         </div>
       </section>
     </div>
-  )
+  );
 }
